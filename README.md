@@ -98,93 +98,92 @@ Quick Installation
 
 	private BluetoothAdapter mBluetoothAdapter;
 	
-	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
-		setContentView(R.layout.activity_main_menu);
+		@Override
+		protected void onCreate(Bundle arg0) {
+			super.onCreate(arg0);
+			setContentView(R.layout.activity_main_menu);
 		
-		final BluetoothManager bluetoothManager = (BluetoothManager) this.getSystemService(Context.BLUETOOTH_SERVICE);
-		mBluetoothAdapter = bluetoothManager.getAdapter();
+			final BluetoothManager bluetoothManager = (BluetoothManager) this.getSystemService(Context.BLUETOOTH_SERVICE);
+			mBluetoothAdapter = bluetoothManager.getAdapter();
 		
-		// Set BluetoothAdapter to MipRobotFinder
-		MiposaurRobotFinder.getInstance().setBluetoothAdapter(mBluetoothAdapter);
+			// Set BluetoothAdapter to MipRobotFinder
+			MiposaurRobotFinder.getInstance().setBluetoothAdapter(mBluetoothAdapter);
 		
-		// Set Context to MipRobotFinder
-		MiposaurRobotFinder finder = MiposaurRobotFinder.getInstance();
-		finder.setApplicationContext(getApplicationContext());
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		this.registerReceiver(mMipFinderBroadcastReceiver, MiposaurRobotFinder.getMiposaurRobotFinderIntentFilter());
-		if (mBluetoothAdapter != null && !mBluetoothAdapter.isEnabled()) {
-           if (!mBluetoothAdapter.isEnabled()) {
-               TextView noBtText = (TextView)this.findViewById(R.id.no_bt_text);
-               noBtText.setVisibility(View.VISIBLE);
-           }
+			// Set Context to MipRobotFinder
+			MiposaurRobotFinder finder = MiposaurRobotFinder.getInstance();
+			finder.setApplicationContext(getApplicationContext());
 		}
-		
-		// Search for mip
-		MiposaurRobotFinder.getInstance().clearFoundMiposaurList();
-		scanLeDevice(false);
-//		updateMipList();
-		scanLeDevice(true);
-	}
-
-	private final BroadcastReceiver mMipFinderBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-            if (MiposaurRobotFinder.MiposaurRobotFinder_MipFound.equals(action)) {
-            	// Connect to miposaur
-            	final Handler handler = new Handler();
-				handler.postDelayed(new Runnable() {
-					
-					@Override
-					public void run() {
-						 List<MiposaurRobot> miposaurFoundList = MiposaurRobotFinder.getInstance().getMiposaursFoundList();
-						 if (miposaurFoundList != null && miposaurFoundList.size() > 0){
-							 MiposaurRobot selectedMiposaurRobot = miposaurFoundList.get(0);
-							  if (selectedMiposaurRobot != null){
-								  connectToMiposaur(selectedMiposaurRobot);
-							  }
-						 }
-					}
-				}, 3000);
-				 
-            }
-        }
-	};
 	
-	private void connectToMiposaur( final MiposaurRobot miposaurRobot) {
-
-		this.runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				miposaurRobot.setCallbackInterface(MainMenuActivity.this);
-				miposaurRobot.connect(MainMenuActivity.this.getApplicationContext());
-				TextView connectionView = (TextView)MainMenuActivity.this.findViewById(R.id.connect_text);
-				connectionView.setText("Connecting: "+miposaurRobot.getName());
-			}
-		});
+		@Override
+		protected void onResume() {
+			super.onResume();
 		
-	}
-
-	@Override
-	public void miposaurDeviceReady(MiposaurRobot sender) {
-		// TODO Auto-generated method stub
-		final MiposaurRobot robot = sender;
-		this.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				TextView connectionView = (TextView)MainMenuActivity.this.findViewById(R.id.connect_text);
-				connectionView.setText("Connected: "+robot.getName());
+			this.registerReceiver(mMipFinderBroadcastReceiver, MiposaurRobotFinder.getMiposaurRobotFinderIntentFilter());
+			if (mBluetoothAdapter != null && !mBluetoothAdapter.isEnabled()) {
+			   if (!mBluetoothAdapter.isEnabled()) {
+				   TextView noBtText = (TextView)this.findViewById(R.id.no_bt_text);
+				   noBtText.setVisibility(View.VISIBLE);
+			   }
 			}
-		});
-	}
+		
+			// Search for mip
+			MiposaurRobotFinder.getInstance().clearFoundMiposaurList();
+			scanLeDevice(false);
+			scanLeDevice(true);
+		}
+
+		private final BroadcastReceiver mMipFinderBroadcastReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				final String action = intent.getAction();
+				if (MiposaurRobotFinder.MiposaurRobotFinder_MipFound.equals(action)) {
+					// Connect to miposaur
+					final Handler handler = new Handler();
+					handler.postDelayed(new Runnable() {
+					
+						@Override
+						public void run() {
+							 List<MiposaurRobot> miposaurFoundList = MiposaurRobotFinder.getInstance().getMiposaursFoundList();
+							 if (miposaurFoundList != null && miposaurFoundList.size() > 0){
+								 MiposaurRobot selectedMiposaurRobot = miposaurFoundList.get(0);
+								  if (selectedMiposaurRobot != null){
+									  connectToMiposaur(selectedMiposaurRobot);
+								  }
+							 }
+						}
+					}, 3000);
+				 
+				}
+			}
+		};
+	
+		private void connectToMiposaur( final MiposaurRobot miposaurRobot) {
+
+			this.runOnUiThread(new Runnable() {
+			
+				@Override
+				public void run() {
+					miposaurRobot.setCallbackInterface(MainMenuActivity.this);
+					miposaurRobot.connect(MainMenuActivity.this.getApplicationContext());
+					TextView connectionView = (TextView)MainMenuActivity.this.findViewById(R.id.connect_text);
+					connectionView.setText("Connecting: "+miposaurRobot.getName());
+				}
+			});
+		
+		}
+
+		@Override
+		public void miposaurDeviceReady(MiposaurRobot sender) {
+			// TODO Auto-generated method stub
+			final MiposaurRobot robot = sender;
+			this.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					TextView connectionView = (TextView)MainMenuActivity.this.findViewById(R.id.connect_text);
+					connectionView.setText("Connected: "+robot.getName());
+				}
+			});
+		}
 
 8. You should be now ready to go! Plug in an Android device then compile and run the project using ⌘+R . When you turn on a MiP you should see some debug messages in the logs.
 
