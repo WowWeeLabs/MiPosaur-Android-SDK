@@ -17,7 +17,6 @@ Table of Contents
 - [Quick Installation](#quick-installation)
 - [Notes about the SDK](#notes-about-the-sdk)
 - [Using the SDK](#using-the-sdk)
-	- [Working with Multiple MiPs](#working-with-multiple-mips)
 - [License](#license)
 - [Contributing](#contributing)
 - [Credits](#credits)
@@ -37,7 +36,7 @@ Quick Installation
 
 	![](Images/New-Eclipse-Project.png)
 
-3. The most important thing to set when creating a new project is to make sure that you set the Android Minimum SDK to version 4.3. Versions of Android below 4.3 do not include the necessary Bluetooth Low Energy APIs so cannot support MiP.
+3. The most important thing to set when creating a new project is to make sure that you set the Android Minimum SDK to version 4.3. Versions of Android below 4.3 do not include the necessary Bluetooth Low Energy APIs so cannot support MiPosaur.
 
 	![](Images/Android-SDK-Version.png)
 
@@ -94,7 +93,7 @@ Quick Installation
 
 7. Check that the project compiles successfully after completing the above steps by pressing ⌘+B in Eclipse to build the project. The project should build successfully.
 
-8. In your MainActivity onCreate method you must add in some handling code to setup the Bluetooth manager and connect to the first available MiP.
+8. In your MainActivity onCreate method you must add in some handling code to setup the Bluetooth manager and connect to the first available MiPosaur.
 
 	private BluetoothAdapter mBluetoothAdapter;
 	
@@ -185,7 +184,7 @@ Quick Installation
 			});
 		}
 
-8. You should be now ready to go! Plug in an Android device then compile and run the project using ⌘+R . When you turn on a MiP you should see some debug messages in the logs.
+9. You should be now ready to go! Plug in an Android device then compile and run the project using ⌘+R . When you turn on a MiPosaur you should see some debug messages in the logs.
 
 
 
@@ -219,7 +218,7 @@ Yes we have provided the source code in our sample project, feel free to use thi
 
 ### Can I create other platform versions of the SDK?
 
-The lower level BLE command protocol is available in our [MiP-BLE-Protocol](https://github.com/WowWeeLabs/MiPosaur-BLE-Protocol) repository, please post any other platform questions there.
+The lower level BLE command protocol is available in our [MiPosaur-BLE-Protocol](https://github.com/WowWeeLabs/MiPosaur-BLE-Protocol) repository, please post any other platform questions there.
 
 
 License
@@ -231,7 +230,7 @@ You are free to use our SDK in your own projects whether free or paid. There are
 
 Contributing
 ---------------------------------
-We happily accept any pull requests and monitor issues on GitHub regularly. Please feel free to give us your suggestions or enhancements. Please note that due to resource constraints we most likely cannot add new features to the MiP robot himself, but we will certainly consider them for inclusion to future robots/versions.
+We happily accept any pull requests and monitor issues on GitHub regularly. Please feel free to give us your suggestions or enhancements. Please note that due to resource constraints we most likely cannot add new features to the MiPosaur robot himself, but we will certainly consider them for inclusion to future robots/versions.
 
 Tell your friends, fork our project, buy our robot and share with us your own projects! These are the best kinds of positive feedback to us.
 
