@@ -238,5 +238,5 @@ Tell your friends, fork our project, buy our robot and share with us your own pr
 
 Projects using this SDK
 ---------------------------------
-* [WowWee MiP Official App](https://play.google.com/store/apps/details?id=com.wowwee.miposaur&hl=en)
+* [WowWee MiPosaur Official App](https://play.google.com/store/apps/details?id=com.wowwee.miposaur&hl=en)
 * Send us a pull request to add your app here
